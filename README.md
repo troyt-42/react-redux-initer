@@ -13,7 +13,8 @@ https://www.youtube.com/playlist?list=PLQDnxXqV213JJFtDaG0aE9vqvp6Wm7nBg
 # 2.Notes and Action Points
 - [x] Jack has set up a git repo at -> https://bitbucket.org/watchandmeet/food
 - [ ] Future meeting to present initer.js
-- [-] Backbone and demo pages up this week
+- [x] Backbone up this week
+- [ ] demo pages up this week
 
 ## Copyright
 - Copyright of React-Redux Tutorial Goes To Kurt Weiberth at Paypal
