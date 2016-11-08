@@ -1,9 +1,10 @@
 # 0. Set-up
-1. git clone this repo
-2. npm install
-3. npm run serve and see localhost:3000
+1. `git clone` this repo
+2. `npm install`
+3. `npm run serve` and checkout localhost:3000
+4. make sure the branch is on 'Demo'
 
-# 1.Intro
+# 1.Tutorial
 - This Starter Kit to React-Redux-Webpack is based on Kurt's tutorial video on Youtube
 https://www.youtube.com/playlist?list=PLQDnxXqV213JJFtDaG0aE9vqvp6Wm7nBg
 - After you are familiar with Redux+React, and how to use webpack to bundle your JSX files, you can take a look at /components/react-redux-initer-example.
@@ -15,6 +16,7 @@ https://www.youtube.com/playlist?list=PLQDnxXqV213JJFtDaG0aE9vqvp6Wm7nBg
 - [ ] Future meeting to present initer.js
 - [x] Backbone up this week
 - [ ] demo pages up this week
+- [ ] Tutorial Coming Soon
 
 ## Copyright
 - Copyright of React-Redux Tutorial Goes To Kurt Weiberth at Paypal
