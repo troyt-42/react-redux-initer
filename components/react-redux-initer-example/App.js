@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import initer from '../../util/initer/initer'
+import initer from 'initer/initer'
 import reducer from './reducer'
 import { actions } from './actions'
 import TodoInput from './TodoInput'

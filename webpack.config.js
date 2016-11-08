@@ -1,5 +1,5 @@
 var webpack = require('webpack');
-
+var path = require('path');
 module.exports = {
     devtool:'inline-source-map',
     entry:[
@@ -16,6 +16,10 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin()
     ],
+    resolve:{
+      root:[path.resolve(__dirname, 'util'),path.resolve(__dirname,'node_modules')],
+        extensions:['','.js']
+    },
     module: {
         loaders:[
             {

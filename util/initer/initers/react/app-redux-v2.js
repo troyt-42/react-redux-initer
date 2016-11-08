@@ -20,10 +20,10 @@ var initer = {
 
         var {Provider} = require('react-redux')
 
-        var {Router, hashHistory} = require('react-router')
+        var {Router, hashHistory, browserHistory} = require('react-router')
         var {syncHistoryWithStore} = require('react-router-redux')
 
-        const history = syncHistoryWithStore(hashHistory, this._store)
+        const history = syncHistoryWithStore(browserHistory, this._store)
 
         ReactDom.render(
             <Provider store={this._store}>
@@ -91,7 +91,6 @@ var initer = {
                 }
             ]
         }
-
         return appRoutes
     }
 }

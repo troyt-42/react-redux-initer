@@ -23,11 +23,11 @@ initer.boots.connect = (mapStateToProps, mapDispatchToProps, mergeProps, options
 }
 
 initer.initApp = ({indexLocation, menuOptions, childRoutes, pageType}) => {
-    const hasContext = !(pageType === PAGE_TYPES.NO_CONTEXT)
-    const App = require('./AppBuilder/App')(pageType)
+    // const hasContext = !(pageType === PAGE_TYPES.NO_CONTEXT)
+    // const App = require('./AppBuilder/App')(pageType)
     const AppForPlainPages = require('./AppBuilder/AppForPlainPages')()
 
-    if (pageType === PAGE_TYPES.PLAIN) {
+    // if (pageType === PAGE_TYPES.PLAIN) {
         // @todo: 可能也需要context，比如记录用户语言的选择
         initer.setRootReducer({}, null)
         initer.init({
@@ -38,120 +38,120 @@ initer.initApp = ({indexLocation, menuOptions, childRoutes, pageType}) => {
                 childRoutes: childRoutes
             }
         })
-        require('utils/i18n')
-    }
-    else if (pageType === PAGE_TYPES.NO_CONTEXT) {
-        fetchMenu(menuOptions).then(menuJson => {
-            if (menuJson.status === 'ok') {
-                bootstrapApp({menuJson})
-                if (!menuJson.data) {
-                    alert('获取菜单失败，无数据')
-                }
-            }
-            else {
-                console.log('fetch menu failed')
-            }
-        })
-    }
-
-    // normal, with menu and context
-    else {
-        const contextPromise = fetchContext()
-        const menuPromise = fetchMenu(menuOptions)
-
-        Promise.join(contextPromise, menuPromise,
-            (contextJson, menuJson) => {
-                if (contextJson && contextJson.status === 'ok'
-                    && menuJson && menuJson.status === 'ok'
-                ) {
-                    initContext(contextJson)
-                    bootstrapApp({contextJson, menuJson})
-                    if (!menuJson.data) {
-                        alert('获取菜单失败，无数据')
-                    }
-                }
-                else {
-                    alert('app initialize failed')
-                }
-                return {
-                    contextJson,
-                    menuJson
-                }
-            }
-        ).then(({contextJson, menuJson}) => {
-
-        }, error => {
-            // window.top.location.href = logoutUrl
-            throw error
-        })
-
-    }
-
-
-    function initContext(json) {
-        if (json.status == 'ok' && json.data) {             //如果拉取服务器的数据成功
-            window.defaults = {'adUserName': json.data.user.username}  //将从服务器返回来的用户名称返回到客户端
-        }
-        else {
-            alert('initContext failed')
-            // window.location.reload()              //如果返回数据不成功，则从重新刷新页面
-        }
-    }
-
-    function bootstrapApp({contextJson, menuJson}) {
-        const menu = resolveMenu(menuJson.data)
-        const navList = menu && menu.navList || []
-        let userData = contextJson && contextJson.data && contextJson.data.user || { language: 'zhs' }
-        let indexState = navList[0] ? {
-            pathname: navList[0].navCode,
-            path: navList[0].path
-        } : null
-
-        let initialReducer = {
-            menu: menuReducer,
-            breadcrumbs: x => resolveBreadcrumbs(childRoutes, { crumbPath: [menu.dispLabel] }),
-        }
-
-        let initialState = {
-            menu: {
-                noMenu: pageType === PAGE_TYPES.HIDE_MENU,    // 商城不显示menu
-                list: navList
-            }
-        }
-
-        if (contextJson) {
-            initialReducer = Object.assign(initialReducer, {
-                context: contextReducer,
-                common: commonReducer
-            })
-
-            initialState = Object.assign(initialState, {
-                context: {                              //请求下来的用户国际化信息
-                    adUserName: userData.username,
-                    employeeName: userData.name,
-                    employeeNumber: userData.employeeNumber,
-                    employeeDepartmentName: userData.departmentName,
-                    employeeWorkPhoto: userData.employeeWorkPhoto,
-                    localeLanguage: userData.language,
-                    langList: userData.langList
-                }
-            })
-        }
-
-        initer.setRootReducer(initialReducer, initialState)
-
-        initer.init({
-            routes: {
-                path: '/',
-                component: App, //对应Layout
-                indexRoute: { onEnter: (nextState, replace) => replace(indexState) },
-                childRoutes: childRoutes
-            }
-        })
-
-        require('utils/i18n').default.switchLanguage(userData.language)
-
-    }
+        // require('utils/i18n')
+    // }
+    // else if (pageType === PAGE_TYPES.NO_CONTEXT) {
+    //     fetchMenu(menuOptions).then(menuJson => {
+    //         if (menuJson.status === 'ok') {
+    //             bootstrapApp({menuJson})
+    //             if (!menuJson.data) {
+    //                 alert('获取菜单失败，无数据')
+    //             }
+    //         }
+    //         else {
+    //             console.log('fetch menu failed')
+    //         }
+    //     })
+    // }
+    //
+    // // normal, with menu and context
+    // else {
+    //     const contextPromise = fetchContext()
+    //     const menuPromise = fetchMenu(menuOptions)
+    //
+    //     Promise.join(contextPromise, menuPromise,
+    //         (contextJson, menuJson) => {
+    //             if (contextJson && contextJson.status === 'ok'
+    //                 && menuJson && menuJson.status === 'ok'
+    //             ) {
+    //                 initContext(contextJson)
+    //                 bootstrapApp({contextJson, menuJson})
+    //                 if (!menuJson.data) {
+    //                     alert('获取菜单失败，无数据')
+    //                 }
+    //             }
+    //             else {
+    //                 alert('app initialize failed')
+    //             }
+    //             return {
+    //                 contextJson,
+    //                 menuJson
+    //             }
+    //         }
+    //     ).then(({contextJson, menuJson}) => {
+    //
+    //     }, error => {
+    //         // window.top.location.href = logoutUrl
+    //         throw error
+    //     })
+    //
+    // }
+    //
+    //
+    // function initContext(json) {
+    //     if (json.status == 'ok' && json.data) {             //如果拉取服务器的数据成功
+    //         window.defaults = {'adUserName': json.data.user.username}  //将从服务器返回来的用户名称返回到客户端
+    //     }
+    //     else {
+    //         alert('initContext failed')
+    //         // window.location.reload()              //如果返回数据不成功，则从重新刷新页面
+    //     }
+    // }
+    //
+    // function bootstrapApp({contextJson, menuJson}) {
+    //     const menu = resolveMenu(menuJson.data)
+    //     const navList = menu && menu.navList || []
+    //     let userData = contextJson && contextJson.data && contextJson.data.user || { language: 'zhs' }
+    //     let indexState = navList[0] ? {
+    //         pathname: navList[0].navCode,
+    //         path: navList[0].path
+    //     } : null
+    //
+    //     let initialReducer = {
+    //         menu: menuReducer,
+    //         breadcrumbs: x => resolveBreadcrumbs(childRoutes, { crumbPath: [menu.dispLabel] }),
+    //     }
+    //
+    //     let initialState = {
+    //         menu: {
+    //             noMenu: pageType === PAGE_TYPES.HIDE_MENU,    // menu not displayed
+    //             list: navList
+    //         }
+    //     }
+    //
+    //     if (contextJson) {
+    //         initialReducer = Object.assign(initialReducer, {
+    //             context: contextReducer,
+    //             common: commonReducer
+    //         })
+    //
+    //         initialState = Object.assign(initialState, {
+    //             context: {                              //请求下来的用户国际化信息
+    //                 adUserName: userData.username,
+    //                 employeeName: userData.name,
+    //                 employeeNumber: userData.employeeNumber,
+    //                 employeeDepartmentName: userData.departmentName,
+    //                 employeeWorkPhoto: userData.employeeWorkPhoto,
+    //                 localeLanguage: userData.language,
+    //                 langList: userData.langList
+    //             }
+    //         })
+    //     }
+    //
+    //     initer.setRootReducer(initialReducer, initialState)
+    //
+    //     initer.init({
+    //         routes: {
+    //             path: '/',
+    //             component: App, //对应Layout
+    //             indexRoute: { onEnter: (nextState, replace) => replace(indexState) },
+    //             childRoutes: childRoutes
+    //         }
+    //     })
+    //
+    //     // require('utils/i18n').default.switchLanguage(userData.language)
+    //
+    // }
 }
 
 initer.bindApp = function ({mapStateToProps, bindActions, bindClass }) {
@@ -176,7 +176,7 @@ initer.pauseReducer = (reducerName) => {
 initer.resetReducer = (reducerName) => {
     initer.boots.resetReducer(reducerName)
 }
-
+// @todo might need to add Context
 // initer.fetchContext = fetchContext
 
 // initer.fetchContext = () => {
