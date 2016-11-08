@@ -5,18 +5,19 @@
  */
 
 import React from 'react'
-import initer from '../../asset/initer'
+import initer from '../../util/initer/initer'
 import reducer from './reducer'
 import { actions } from './actions'
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
+
 //start our reducer by doing initer.injectReducer, lets call it myReducer
 initer.injectReducer('myReducer',reducer);
 
 module.exports = initer.bindApp({
     mapStateToProps: state=> {
         return {
-            todos: state.todos
+            todos: state.myReducer.todos
         }
     },
     bindActions: {
